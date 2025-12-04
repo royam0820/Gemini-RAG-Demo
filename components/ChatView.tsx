@@ -155,19 +155,19 @@ export const ChatView: React.FC<ChatViewProps> = ({ isSignedIn }) => {
       timestamp: Date.now()
     }]);
 
-    try {
-      const response = await fetch('https://anneroyam.app.n8n.cloud/webhook/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-API-Key': '3ee0be8da48620f94c13bc0735ead8c91cc44068e4804e5324f34b55a75554dc8340a993493745a2c4f2153a482355d192b0da7d52c383028ba0d2ea09cb0603'
-        },
-        body: JSON.stringify({ 
-          message: userMsg.text,
-          sessionId: sessionIdRef.current
-        })
-      });
-
+try {
+  const response = await fetch(process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-Key': process.env.NEXT_PUBLIC_N8N_API_KEY
+    },
+    body: JSON.stringify({ 
+      message: userMsg.text,
+      sessionId: sessionIdRef.current
+    })
+  });
+    
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
